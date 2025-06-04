@@ -1,0 +1,83 @@
+-- ----------------------------------------
+-- 1. Create Database
+-- ----------------------------------------
+CREATE DATABASE IF NOT EXISTS hospital_db;
+USE hospital_db;
+
+-- ----------------------------------------
+-- 2. Create Tables
+-- ----------------------------------------
+
+CREATE TABLE Patients (
+    PatientID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Age INT,
+    Gender VARCHAR(10),
+    ContactNumber VARCHAR(15),
+    Address VARCHAR(255)
+);
+
+CREATE TABLE Doctors (
+    DoctorID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Specialization VARCHAR(100),
+    ContactNumber VARCHAR(15)
+);
+
+CREATE TABLE Appointments (
+    AppointmentID INT PRIMARY KEY,
+    PatientID INT,
+    DoctorID INT,
+    AppointmentDate DATE,
+    AppointmentTime TIME,
+    Reason VARCHAR(255),
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+);
+
+CREATE TABLE Billing (
+    BillID INT PRIMARY KEY AUTO_INCREMENT,
+    AppointmentID INT,
+    Amount DECIMAL(10, 2),
+    BillingDate DATE,
+    FOREIGN KEY (AppointmentID) REFERENCES Appointments(AppointmentID)
+);
+
+-- ----------------------------------------
+-- 3. Insert Sample Data (Only first 5 shown; remaining available upon request)
+-- ----------------------------------------
+
+-- Insert Patients
+INSERT INTO Patients (Name, Age, Gender, ContactNumber, Address) VALUES
+('John Doe', 45, 'Male', '9876543210', '123 Elm Street'),
+('Jane Smith', 30, 'Female', '9123456780', '456 Oak Avenue'),
+('Alice Johnson', 27, 'Female', '9345678901', '789 Pine Road'),
+('Robert Brown', 50, 'Male', '9234567890', '321 Maple Street'),
+('Emily Davis', 34, 'Female', '9988776655', '654 Birch Lane');
+
+-- Insert Doctors
+INSERT INTO Doctors (Name, Specialization, ContactNumber) VALUES
+('Dr. Andrew Adams', 'Cardiology', '8899001122'),
+('Dr. Barbara Blake', 'Orthopedics', '7766554433'),
+('Dr. Charlie Carter', 'Neurology', '6655443322'),
+('Dr. Diana Dorsey', 'Pediatrics', '5544332211'),
+('Dr. Evan Elbert', 'Dermatology', '4433221100');
+
+
+-- Insert Appointments
+INSERT INTO Appointments (AppointmentID, PatientID, DoctorID, AppointmentDate, AppointmentTime, Reason) VALUES
+(1, 1, 1, '2025-06-10', '10:00:00', 'Heart Checkup'),
+(2, 2, 3, '2025-06-11', '11:30:00', 'Migraine'),
+(3, 3, 2, '2025-06-12', '09:00:00', 'Knee Pain'),
+(4, 4, 1, '2025-06-13', '14:00:00', 'Diabetes Review'),
+(5, 5, 2, '2025-06-14', '15:30:00', 'Blood Pressure Follow-up');
+
+
+-- Insert Billing
+INSERT INTO Billing (AppointmentID, Amount, BillingDate) VALUES
+(1, 1200.00, '2025-06-10'),
+(2, 1500.00, '2025-06-11'),
+(3, 900.00, '2025-06-12'),
+(4, 1100.00, '2025-06-13'),
+(5, 950.00, '2025-06-14');
+
