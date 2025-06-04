@@ -1,4 +1,6 @@
 <----------------------Hospital Management System---------------------->
+
+
 This project provides a basic command-line interface for managing hospital data, including patients, doctors, appointments, and billing. It uses MySQL as the database and Python for the application logic.
 
 <!-- Features -->
